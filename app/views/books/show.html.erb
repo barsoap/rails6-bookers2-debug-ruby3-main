@@ -55,8 +55,8 @@
           <% @post_comments.each do |post_comment| %>
             <tr>
               <td> <!--ユーザー画像-->
-                <%= link_to(book.user) do %> <!--ユーザー画像-->
-                  <%= image_tag post_comment.user.get_profile_image, size:'50x50' %>
+                <%= link_to(post_comment.user) do %> <!--ユーザー画像-->
+                  <%= image_tag post_comment.user.get_profile_image, size:'50x50' %> <br>
                   <%= post_comment.user.name %>
                 <% end %>
               </td>
@@ -64,16 +64,17 @@
                 <%= post_comment.comment %>
               </td>
               <td> <!--コメント削除ボタン-->
-                <% if post_comment_user == current_user %>
-                  <%= link_to 'Destroy', book_post_comment(post_comment.id), method: :delete %>
+                <% if post_comment.user == current_user %>
+                  <%= link_to 'Destroy', book_post_comment_path(@book, post_comment), method: :delete, class: "btn btn-sm btn-danger" %>
                 <% end %>
               </td>
             </tr>
           <% end %>
         </table>
-        <div> <!--コメント送信-->
-          <%= form_with model:@post_comment, url:book_post_comments_path(@book), method: :post, local:true do |f| %>
-            <%= f.text_area :comment, class: '' %>
+        <div> <!--コメント投稿-->
+          <!--%= form_with model:@post_comment, url:book_post_comments_path(@book), method: :post, local:true do |f| %>-->
+          <%= form_with(model:[@book, @post_comment], local: true) do |f| %>
+            <%= f.text_area :comment, rows:'5',placeholder: "コメントをここに", class: "w-100" %>
             <%= f.submit '送信' %>
           <% end %>
         </div>
