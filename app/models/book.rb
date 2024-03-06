@@ -12,4 +12,18 @@ class Book < ApplicationRecord
   def post_commented_by?
     post_comments.exists?(user_id: user.id)
   end
+
+  #search_forメソッドの定義
+  def self.search_for(content, method)
+    if method == 'perfect'
+      Book.where(title: content)
+    elsif method == 'forward'
+      Book.where('name LIKE ?', content + '%')
+    elsif method == 'backward'
+      Book.where('name LIKE ?', '%' + content)
+    else
+      Book.where('name LIKE ?', '%' + content + '%')
+    end
+  end
+
 end
