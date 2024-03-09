@@ -1,0 +1,9 @@
+<% if book.liked_by?(current_user) %>
+    <%= link_to book_like_path(book), method: :delete, remote: true do %>
+      ♥<%= book.likes.count %>
+    <% end %>
+<% else %>
+    <%= link_to book_like_path(book), method: :post, remote: true do %>
+      ♡<%= book.likes.count %>
+    <% end %>
+<% end %>
