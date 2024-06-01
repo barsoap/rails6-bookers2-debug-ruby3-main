@@ -11,10 +11,11 @@ class PostCommentsController < ApplicationController
   end
 
   def destroy
-    @postcomment = PostComment.find_by(params[:id])
+    comment = PostComment.find_by(params[:id])
     #↑ URLから、IDとコメントをした本のIDを取得・削除
-    @postcomment.destroy
+    comment.destroy
     # redirect_to request.referer
+    render :destroy #非同期でコメント削除ができない(更新したら削除はできてる状態)
   end
 
   # book = Book.find(params[:book_id])
@@ -27,7 +28,7 @@ class PostCommentsController < ApplicationController
     # end
 
   private
-    def post_comment_params
-      params.require(:post_comment).permit(:comment)
-    end
+  def post_comment_params
+    params.require(:post_comment).permit(:comment)
+  end
 end
