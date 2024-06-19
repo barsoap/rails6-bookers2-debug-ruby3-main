@@ -6,7 +6,7 @@ class PostCommentsController < ApplicationController
     @comment = current_user.post_comments.new(post_comment_params)
     @comment.book_id = @book.id
     @comment.save
-    # redirect_to request.referer #現在リクエストされているページへのリンクを持った直前のウェブページのアドレスが含まれています。
+    redirect_to request.referer #現在リクエストされているページへのリンクを持った直前のウェブページのアドレスが含まれています。
                               #そのため、上記のような記述をすることで、直前のページにredirectすることができます。
   end
 
@@ -15,7 +15,7 @@ class PostCommentsController < ApplicationController
     # comment = PostComment.find_by(params[:id])
     #↑ URLから、IDとコメントをした本のIDを取得・削除
     # comment.destroy
-    # redirect_to request.referer
+    redirect_to request.referer
     # render :destroy #非同期でコメント削除ができない(更新したら削除はできてる状態)
   end
 
